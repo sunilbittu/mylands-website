@@ -130,20 +130,19 @@ export default function Hero() {
         {/* Main heading with staggered reveal */}
         <div className="overflow-hidden">
           <motion.h1
-            initial={{ y: '120%', rotateX: 40 }}
-            animate={{ y: 0, rotateX: 0 }}
-            transition={{ duration: 1.4, delay: 3.7, ease: [0.76, 0, 0.24, 1] }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1.2, delay: 3.7, ease: [0.76, 0, 0.24, 1] }}
             className="font-heading text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8.5rem] text-cream text-center leading-[0.85] tracking-[-0.02em]"
-            style={{ perspective: '600px' }}
           >
             Building
           </motion.h1>
         </div>
         <div className="overflow-hidden mt-1 sm:mt-2">
           <motion.h1
-            initial={{ y: '120%', rotateX: 40 }}
-            animate={{ y: 0, rotateX: 0 }}
-            transition={{ duration: 1.4, delay: 3.85, ease: [0.76, 0, 0.24, 1] }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1.2, delay: 3.85, ease: [0.76, 0, 0.24, 1] }}
             className="font-heading text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8.5rem] text-center leading-[0.85] tracking-[-0.02em] italic text-accent"
           >
             Sustainable
@@ -151,9 +150,9 @@ export default function Hero() {
         </div>
         <div className="overflow-hidden mt-1 sm:mt-2">
           <motion.h1
-            initial={{ y: '120%', rotateX: 40 }}
-            animate={{ y: 0, rotateX: 0 }}
-            transition={{ duration: 1.4, delay: 4.0, ease: [0.76, 0, 0.24, 1] }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1.2, delay: 4.0, ease: [0.76, 0, 0.24, 1] }}
             className="font-heading text-[2.8rem] sm:text-6xl md:text-7xl lg:text-[6.5rem] xl:text-[8.5rem] text-cream text-center leading-[0.85] tracking-[-0.02em]"
           >
             Futures
