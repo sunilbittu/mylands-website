@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import HeroCanvas from './HeroCanvas'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -10,14 +11,12 @@ export default function Hero() {
   const headingRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
-  const particlesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Deep parallax on background
+      // Parallax push on canvas wrapper
       gsap.to(imageRef.current, {
-        yPercent: 30,
-        scale: 1.15,
+        yPercent: 20,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -29,7 +28,7 @@ export default function Hero() {
 
       // Overlay darkens on scroll
       gsap.to(overlayRef.current, {
-        opacity: 0.8,
+        opacity: 0.85,
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
@@ -50,26 +49,6 @@ export default function Hero() {
           scrub: true,
         },
       })
-
-      // Floating particles
-      if (particlesRef.current) {
-        const particles = particlesRef.current.children
-        Array.from(particles).forEach((p, i) => {
-          gsap.to(p, {
-            y: `${-100 - i * 40}`,
-            x: `${Math.sin(i) * 50}`,
-            opacity: 0,
-            duration: 3 + i * 0.5,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true,
-            },
-          })
-        })
-      }
     })
 
     return () => ctx.revert()
@@ -77,39 +56,13 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative h-[100svh] overflow-hidden">
-      {/* Background with parallax */}
+      {/* Animated Canvas Background */}
       <div ref={imageRef} className="absolute inset-0 scale-110">
-        <div className="w-full h-full bg-gradient-to-br from-[#0d1f15] via-primary to-[#1a3528]" />
-        {/* Animated grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(200,169,110,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.4) 1px, transparent 1px)`,
-            backgroundSize: '80px 80px',
-          }}
-        />
-        {/* Radial glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[120px]" />
+        <HeroCanvas />
       </div>
 
-      {/* Gradient overlay */}
-      <div ref={overlayRef} className="absolute inset-0 bg-gradient-to-b from-primary/20 via-transparent to-primary/60" style={{ opacity: 0.3 }} />
-
-      {/* Floating particles */}
-      <div ref={particlesRef} className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="particle bg-accent/20"
-            style={{
-              width: `${4 + i * 2}px`,
-              height: `${4 + i * 2}px`,
-              left: `${15 + i * 14}%`,
-              top: `${40 + Math.sin(i) * 20}%`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Gradient overlay — darkens on scroll */}
+      <div ref={overlayRef} className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-primary/50" style={{ opacity: 0.2 }} />
 
       {/* Content */}
       <div ref={headingRef} className="relative z-10 h-full flex flex-col items-center justify-center px-4 sm:px-6 pt-24 md:pt-28">
