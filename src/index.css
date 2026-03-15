@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1a2f23;
+  --color-primary-light: #2d4a37;
+  --color-accent: #c8a96e;
+  --color-accent-light: #dcc291;
+  --color-cream: #f5f0e8;
+  --color-cream-dark: #e8dfd0;
+  --color-charcoal: #1c1c1c;
+  --color-warm-gray: #4a4a4a;
+  --color-sage: #8faa7b;
+  --color-earth: #8b6f47;
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+  }
+
+  @media (max-width: 1024px) {
+    body { cursor: auto; }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", serif;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+  }
+}
+
+@layer components {
+  /* ─── Film grain ─── */
+  .grain-overlay::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    animation: grain 8s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    20% { transform: translate(-15%, 5%); }
+    30% { transform: translate(7%, -25%); }
+    40% { transform: translate(-5%, 25%); }
+    50% { transform: translate(-15%, 10%); }
+    60% { transform: translate(15%, 0%); }
+    70% { transform: translate(0%, 15%); }
+    80% { transform: translate(3%, 35%); }
+    90% { transform: translate(-10%, 10%); }
+  }
+
+  /* ─── Marquee ─── */
+  .marquee-track {
+    display: flex;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee-reverse {
+    animation-direction: reverse;
+  }
+
+  /* ─── Text animations ─── */
+  .char-reveal .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  .word-reveal .word {
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .word-reveal .word-inner {
+    display: inline-block;
+    transform: translateY(100%);
+  }
+
+  /* ─── Horizontal scroll ─── */
+  .horizontal-scroll-section {
+    overflow: hidden;
+  }
+
+  .horizontal-scroll-track {
+    display: flex;
+    will-change: transform;
+  }
+
+  .horizontal-scroll-track > * {
+    flex-shrink: 0;
+  }
+
+  /* ─── Magnetic ─── */
+  .magnetic-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* ─── Masked images ─── */
+  .img-clip {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+    transition: clip-path 0s;
+  }
+
+  .img-clip.revealed {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  /* ─── Glow effects ─── */
+  .glow-accent {
+    box-shadow: 0 0 80px 20px rgba(200, 169, 110, 0.08);
+  }
+
+  .glow-line {
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    height: 1px;
+  }
+
+  /* ─── Counter ─── */
+  .counter-digit {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ─── Parallax depth layers ─── */
+  .parallax-deep { will-change: transform; }
+  .parallax-mid { will-change: transform; }
+  .parallax-near { will-change: transform; }
+
+  /* ─── Floating particles ─── */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  /* ─── Scroll progress ─── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-sage));
+    z-index: 10001;
+    transform-origin: left;
+    will-change: transform;
+  }
+
+  /* ─── Stagger grid ─── */
+  .stagger-grid > * {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+
+  .stagger-grid.revealed > * {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .stagger-grid.revealed > *:nth-child(1) { transition-delay: 0s; }
+  .stagger-grid.revealed > *:nth-child(2) { transition-delay: 0.1s; }
+  .stagger-grid.revealed > *:nth-child(3) { transition-delay: 0.2s; }
+  .stagger-grid.revealed > *:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ─── Section divider ─── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--color-accent) 20%,
+      var(--color-accent) 80%,
+      transparent 100%
+    );
+    opacity: 0.2;
+  }
+}
